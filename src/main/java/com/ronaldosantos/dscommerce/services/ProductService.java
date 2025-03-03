@@ -30,8 +30,8 @@ public class ProductService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<ProductDTO> findAll(Pageable pagealbe ) {
-		Page<Product> result = repository.findAll(pagealbe);
+	public Page<ProductDTO> findAll(String name, Pageable pagealbe ) {
+		Page<Product> result = repository.searchByName(name, pagealbe);
 		return result.map(x -> new ProductDTO(x));
 	}
 	
@@ -70,6 +70,8 @@ public class ProductService {
 			throw new DatabaseException("Falha de integridade referencial");
 		}
 	}
+	
+	
 	
 	
 	private void copyDtoToEntity(ProductDTO dto, Product entity) {
